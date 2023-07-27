@@ -1,1 +1,1 @@
-*.MDX linguist-vendored
+*.mdx linguist-detectable=false
