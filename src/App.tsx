@@ -1,15 +1,10 @@
+import ErrorPage from '@components/pages/ErrorPage';
+import Home from '@components/pages/Home';
+import GlobalStyle from '@styles/GlobalStyle';
 import * as React from 'react';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import reset from 'styled-reset';
-import theme from './styles/theme';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import ErrorPage from '@pages/ErrorPage';
-import Home from '@pages/Home';
-
-const GlobalStyle = createGlobalStyle`
-  ${reset}
-  /* other styles */
-`;
+import { ThemeProvider } from 'styled-components';
+import theme from './styles/theme';
 
 const router = createBrowserRouter([
   {
