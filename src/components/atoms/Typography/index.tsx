@@ -24,95 +24,96 @@ interface ITypography {
 
 interface IFont {
   size: string;
-  weight: number;
+  'font-family': string;
   lineHeight: string;
 }
 
 const typo: ITypography = {
   heading1: {
     size: '24px',
-    weight: 700,
+    'font-family': 'SpoqaHanSansNeo-Bold',
     lineHeight: '32px',
   },
   heading2: {
     size: '22px',
-    weight: 700,
+    'font-family': 'SpoqaHanSansNeo-Bold',
     lineHeight: '30px',
   },
   heading3: {
     size: '20px',
-    weight: 700,
+    'font-family': 'SpoqaHanSansNeo-Bold',
     lineHeight: '28px',
   },
   heading4: {
     size: '18px',
-    weight: 700,
+    'font-family': 'SpoqaHanSansNeo-Bold',
     lineHeight: '26px',
   },
   subtitle1: {
     size: '16px',
-    weight: 700,
+    'font-family': 'SpoqaHanSansNeo-Bold',
     lineHeight: '24px',
   },
   subtitle2: {
     size: '14px',
-    weight: 700,
+    'font-family': 'SpoqaHanSansNeo-Bold',
     lineHeight: '22px',
   },
   body1: {
     size: '18px',
-    weight: 400,
+    'font-family': 'SpoqaHanSansNeo-Regular',
     lineHeight: '26px',
   },
   body2: {
     size: '16px',
-    weight: 400,
+    'font-family': 'SpoqaHanSansNeo-Regular',
     lineHeight: '24px',
   },
   'body2-long': {
     size: '16px',
-    weight: 400,
+    'font-family': 'SpoqaHanSansNeo-Regular',
     lineHeight: '26px',
   },
   body3: {
     size: '14px',
-    weight: 400,
+    'font-family': 'SpoqaHanSansNeo-Regular',
     lineHeight: '22px',
   },
   'body3-long': {
     size: '14px',
-    weight: 400,
+    'font-family': 'SpoqaHanSansNeo-Regular',
     lineHeight: '24px',
   },
   caption: {
     size: '12px',
-    weight: 500,
+    'font-family': 'SpoqaHanSansNeo-Medium',
     lineHeight: '20px',
   },
   overline: {
     size: '10px',
-    weight: 500,
+    'font-family': 'SpoqaHanSansNeo-Medium',
     lineHeight: '18px',
   },
   label1: {
     size: '10px',
-    weight: 500,
+    'font-family': 'SpoqaHanSansNeo-Medium',
     lineHeight: '18px',
   },
   label2: {
     size: '11px',
-    weight: 500,
+    'font-family': 'SpoqaHanSansNeo-Medium',
     lineHeight: '16px',
   },
 };
 
-const Typography = styled.div<{ level: string }>`
-  /* font-family: Spoqa Han Sans Neo; */
+const Typography = styled.div<{ $level: string; $color?: string }>`
+  font-family: ${(props) => typo[props.$level as keyof ITypography]['font-family']};
+
   font-style: normal;
 
-  font-size: ${(props) => typo[props.level as keyof ITypography].size};
-  font-weight: ${(props) => typo[props.level as keyof ITypography].weight};
-  line-height: ${(props) => typo[props.level as keyof ITypography].lineHeight};
+  font-size: ${(props) => typo[props.$level as keyof ITypography].size};
+  line-height: ${(props) => typo[props.$level as keyof ITypography].lineHeight};
+  color: ${(props) => (props.$color ? `var(${props.$color})` : `var(--gray-900)`)};
 `;
 
 export default Typography;
