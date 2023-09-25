@@ -15,14 +15,116 @@ interface ButtonProps {
   children?: React.ReactNode;
 }
 
-interface StyledButtonProps {
-  type?: 'outlined' | 'filled';
-  size?: 'small' | 'large' | 'long';
-  disabled?: boolean;
-  onClick?: () => void;
-  icon?: boolean;
-  children?: React.ReactNode;
+interface StyledButtonProps extends ButtonProps {
+  getBackgroundColor: (props: ButtonProps) => string;
+  getColor: (props: ButtonProps) => string;
+  getBorder: (props: ButtonProps) => string;
+  getBackgroundColorHover: (props: ButtonProps) => string;
+  getColorHover: (props: ButtonProps) => string;
 }
+
+function Button({
+  type = 'outlined',
+  size = 'small',
+  disabled = false,
+  onClick,
+  icon = false,
+  children,
+}: ButtonProps) {
+  const [isPlusIconActive, setIsPlusIconActive] = useState(false);
+  const handlePlusIconActive = () => {
+    setIsPlusIconActive((prev) => !prev);
+  };
+
+  const renderIcon = (icon: boolean) => {
+    if (!icon) return null;
+
+    if (type === 'filled') {
+      return <PlusFilledIcon />;
+    } else if (disabled) {
+      return <PlusDisabledIcon />;
+    } else if (isPlusIconActive) {
+      return <PlusHoverIcon />;
+    } else {
+      return <PlusEnabledIcon />;
+    }
+  };
+
+  const getBackgroundColor = (props: ButtonProps) => {
+    if (props.type === 'outlined') {
+      return 'transparent';
+    } else if (props.disabled) {
+      return 'var(--button-disabled)';
+    } else {
+      return 'var(--primary)';
+    }
+  };
+
+  const getColor = (props: ButtonProps) => {
+    if (props.type === 'filled') {
+      return 'var(--white)';
+    } else if (props.disabled) {
+      return 'var(--gray-400)';
+    } else {
+      return 'var(--primary)';
+    }
+  };
+
+  const getBorder = (props: ButtonProps) => {
+    if (props.type === 'filled') {
+      return 'transparent';
+    } else if (props.disabled) {
+      return '1px solid var(--gray-400)';
+    } else {
+      return '1px solid var(--primary)';
+    }
+  };
+
+  const getBackgroundColorHover = (props: ButtonProps) => {
+    if (props.type === 'outlined') {
+      return 'transparent';
+    } else if (props.disabled) {
+      return 'var(--button-disabled)';
+    } else {
+      return 'var(--orange-500)';
+    }
+  };
+
+  const getColorHover = (props: ButtonProps) => {
+    if (props.type === 'filled') {
+      return 'var(--white)';
+    } else if (props.disabled) {
+      return 'var(--gray-400)';
+    } else {
+      return 'var(--orange-500)';
+    }
+  };
+
+  return (
+    <StyleSheetManager shouldForwardProp={(prop) => prop !== 'icon'}>
+      <StyledButton
+        type={type}
+        size={size}
+        disabled={disabled}
+        onClick={disabled ? undefined : onClick}
+        icon={icon}
+        onMouseEnter={handlePlusIconActive}
+        onMouseLeave={handlePlusIconActive}
+        getBackgroundColor={getBackgroundColor}
+        getColor={getColor}
+        getBorder={getBorder}
+        getBackgroundColorHover={getBackgroundColorHover}
+        getColorHover={getColorHover}
+      >
+        {size !== 'long' && renderIcon(icon)}
+        {children}
+        {size === 'long' && renderIcon(icon)}
+      </StyledButton>
+    </StyleSheetManager>
+  );
+}
+
+export default Button;
 
 const StyledButton = styled.button<StyledButtonProps>`
   /* 공통 스타일 */
@@ -36,39 +138,14 @@ const StyledButton = styled.button<StyledButtonProps>`
   font-size: 0.875rem;
 
   /* 버튼 타입에 따른 스타일 */
-  background-color: ${(props) =>
-    props.type === 'outlined'
-      ? 'transparent'
-      : props.disabled
-      ? 'var(--button-disabled)'
-      : 'var(--primary)'};
-  color: ${(props) =>
-    props.type === 'filled'
-      ? 'var(--white)'
-      : props.disabled
-      ? 'var(--gray-400)'
-      : 'var(--primary)'};
-  border: ${(props) =>
-    props.type === 'filled'
-      ? 'transparent'
-      : props.disabled
-      ? '1px solid var(--gray-400)'
-      : '1px solid var(--primary)'};
+  background-color: ${(props) => props.getBackgroundColor(props)};
+  color: ${(props) => props.getColor(props)};
+  border: ${(props) => props.getBorder(props)};
 
   /* 마우스 호버 시 스타일 */
   &:hover {
-    background-color: ${(props) =>
-      props.type === 'outlined'
-        ? 'transparent'
-        : props.disabled
-        ? 'var(--button-disabled)'
-        : 'var(--orange-500)'};
-    color: ${(props) =>
-      props.type === 'filled'
-        ? 'var(--white)'
-        : props.disabled
-        ? 'var(--gray-400)'
-        : 'var(--orange-500)'};
+    background-color: ${(props) => props.getBackgroundColorHover(props)};
+    color: ${(props) => props.getColorHover(props)};
   }
 
   /* 버튼 사이즈에 따른 스타일 */
@@ -104,58 +181,3 @@ const StyledButton = styled.button<StyledButtonProps>`
   /* 비활성화 시 스타일링 */
   cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
 `;
-
-function Button({
-  type = 'outlined',
-  size = 'small',
-  disabled = false,
-  onClick,
-  icon = false,
-  children,
-}: ButtonProps) {
-  const [isPlusIconActive, setIsPlusIconActive] = useState(false);
-  console.log(type, size, icon, isPlusIconActive, !children);
-  const handlePlusIconActive = () => {
-    setIsPlusIconActive((prev) => !prev);
-  };
-
-  return (
-    <StyleSheetManager shouldForwardProp={(prop) => prop !== 'icon'}>
-      <StyledButton
-        type={type}
-        size={size}
-        disabled={disabled}
-        onClick={disabled ? undefined : onClick}
-        icon={icon}
-        onMouseEnter={handlePlusIconActive}
-        onMouseLeave={handlePlusIconActive}
-      >
-        {icon &&
-          size !== 'long' &&
-          (type === 'filled' ? (
-            <PlusFilledIcon />
-          ) : disabled ? (
-            <PlusDisabledIcon />
-          ) : isPlusIconActive ? (
-            <PlusHoverIcon />
-          ) : (
-            <PlusEnabledIcon />
-          ))}
-        {children}
-        {icon &&
-          size === 'long' &&
-          (type === 'filled' ? (
-            <PlusFilledIcon />
-          ) : disabled ? (
-            <PlusDisabledIcon />
-          ) : isPlusIconActive ? (
-            <PlusHoverIcon />
-          ) : (
-            <PlusEnabledIcon />
-          ))}
-      </StyledButton>
-    </StyleSheetManager>
-  );
-}
-
-export default Button;
