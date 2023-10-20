@@ -40,7 +40,6 @@ export default function MainPage() {
 const MainPageLayout = styled.div`
   width: 22.5rem;
   height: 78.3125rem;
-  background-color: var(--red-900);
   display: flex;
   justify-content: center;
 `;
