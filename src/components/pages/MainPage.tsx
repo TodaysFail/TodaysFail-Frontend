@@ -1,7 +1,11 @@
 import Typography from '@components/atoms/Typography';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function MainPage() {
+  const guideUrl = import.meta.env.VITE_GUIDE_URL;
+  const storyUrl = import.meta.env.VITE_STORY_URL;
+
   return (
     <MainPageLayout>
       <MainPageContainer>
@@ -11,7 +15,7 @@ export default function MainPage() {
               어떻게 써야 하나요?
             </Typography>
           </GuideHeader>
-          <GuideContent>
+          <GuideContent to={guideUrl}>
             <Typography $level="subtitle2" $color="--white">
               실패 기록 가이드
             </Typography>
@@ -19,7 +23,7 @@ export default function MainPage() {
               오늘의 실패 100% 활용법
             </Typography>
           </GuideContent>
-          <StoryContainer>
+          <StoryContainer to={storyUrl}>
             <Typography $level="subtitle2" $color="--white">
               오늘의 실패 이야기
             </Typography>
@@ -55,7 +59,7 @@ const GuideHeader = styled.div`
   margin: 0.5rem 0;
 `;
 
-const GuideContent = styled.div`
+const GuideContent = styled(Link)`
   display: flex;
   padding: 1rem;
   flex-direction: column;
@@ -63,6 +67,7 @@ const GuideContent = styled.div`
   gap: 0.625rem;
   background-color: var(--orange-400);
   border-radius: 0.5rem;
+  text-decoration: none;
 `;
 
 const StoryContainer = styled(GuideContent)`

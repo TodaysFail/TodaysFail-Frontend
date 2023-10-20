@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths(), svgr()],
   server: {
     proxy: {
-      '/api': 'https://dev.todaysfail.com',
+      '/api': process.env.VITE_API_URL,
     },
   },
   optimizeDeps: {
