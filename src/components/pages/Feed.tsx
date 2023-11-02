@@ -41,15 +41,3 @@ const Header = styled.div`
   width: 100%;
   max-width: 390px;
 `;
-
-// const NavBar = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   position: fixed;
-//   bottom: 0;
-//   background-color: var(--white);
-//   width: 100%;
-//   max-width: 390px;
-//   height: 60px;
-// `;
