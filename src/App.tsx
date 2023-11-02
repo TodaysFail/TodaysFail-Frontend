@@ -1,5 +1,5 @@
 import ErrorPage from '@components/pages/ErrorPage';
-import Home from '@components/pages/Home';
+import MainPage from '@components/pages/MainPage';
 import GlobalStyle from '@styles/GlobalStyle';
 import * as React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -9,7 +9,7 @@ import theme from './styles/theme';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <MainPage />,
     errorElement: <ErrorPage />,
   },
 ]);
