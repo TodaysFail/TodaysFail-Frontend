@@ -1,3 +1,4 @@
+import NavigationBar from '@components/molecules/NavigationBar';
 import FeedCard from '@components/organisms/FeedCard';
 import { styled } from 'styled-components';
 
@@ -12,7 +13,7 @@ export default function Feed() {
           <FeedCard />
         </div>
       </FeedWrapper>
-      <NavBar>네비게이션 바</NavBar>
+      <NavigationBar />
     </Layout>
   );
 }
@@ -41,14 +42,14 @@ const Header = styled.div`
   max-width: 390px;
 `;
 
-const NavBar = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-  background-color: var(--white);
-  width: 100%;
-  max-width: 390px;
-  height: 60px;
-`;
+// const NavBar = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   position: fixed;
+//   bottom: 0;
+//   background-color: var(--white);
+//   width: 100%;
+//   max-width: 390px;
+//   height: 60px;
+// `;
