@@ -107,6 +107,8 @@ const typo: ITypography = {
 };
 
 const Typography = styled.div<{ $level: string; $color?: string }>`
+  display: flex;
+  align-items: center;
   font-family: ${(props) => typo[props.$level as keyof ITypography]['font-family']};
 
   font-style: normal;
